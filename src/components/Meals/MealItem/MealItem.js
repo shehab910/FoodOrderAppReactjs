@@ -1,4 +1,5 @@
 import styles from "./MealItem.module.css";
+import MealItemForm from "./MealItemForm";
 
 const MealItem = (props) => {
   const meal = props.meal;
@@ -10,7 +11,9 @@ const MealItem = (props) => {
         <div className={styles.description}>{meal.description}</div>
         <div className={styles.price}>{price}</div>
       </div>
-      <div></div>
+      <div>
+        <MealItemForm />
+      </div>
     </li>
   );
 };
