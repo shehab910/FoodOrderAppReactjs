@@ -32,7 +32,7 @@ import MealItem from "./MealItem/MealItem";
 
 const apiLink = "/api/meals/";
 
-const AvailableMeals = ({ ShowAdminControls }) => {
+const AvailableMeals = ({ adminControls }) => {
    const [meals, setMeals] = useState([]);
    const [isLoading, setIsLoading] = useState(true);
    const [httpError, setHttpError] = useState();
@@ -67,11 +67,7 @@ const AvailableMeals = ({ ShowAdminControls }) => {
    }, []);
 
    const mealsList = meals.map((meal) => (
-      <MealItem
-         key={meal.id}
-         meal={meal}
-         ShowAdminControls={ShowAdminControls}
-      />
+      <MealItem key={meal.id} meal={meal} adminControls={adminControls} />
    ));
    // meals.splice(0, meals.length); //simulating empty response
    if (isLoading) {
