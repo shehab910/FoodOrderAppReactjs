@@ -1,0 +1,27 @@
+.btn {
+   width: 100%;
+   padding: 0.5rem;
+   border-radius: 5px;
+   border: 1px solid #ccc;
+   margin: 1rem;
+   background-color: #010101;
+   color: #efefef;
+   font-size: medium;
+   font-weight: bold;
+   max-width: max-content;
+}
+
+.btn:hover {
+   background-color: #3f3f3f;
+   cursor: pointer;
+}
+.container {
+   margin-left: auto;
+}
+
+.danger {
+   background-color: rgb(198, 0, 0);
+}
+.danger:hover {
+   background-color: rgb(227, 0, 0);
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import Card from "../UI/Card";
 import styles from "./AvailableMeals.module.css";
 import MealItem from "./MealItem/MealItem";
@@ -32,7 +32,7 @@ import MealItem from "./MealItem/MealItem";
 
 const apiLink = "/api/meals/";
 
-const AvailableMeals = () => {
+const AvailableMeals = ({ ShowAdminControls }) => {
    const [meals, setMeals] = useState([]);
    const [isLoading, setIsLoading] = useState(true);
    const [httpError, setHttpError] = useState();
@@ -67,7 +67,11 @@ const AvailableMeals = () => {
    }, []);
 
    const mealsList = meals.map((meal) => (
-      <MealItem key={meal.id} meal={meal} />
+      <MealItem
+         key={meal.id}
+         meal={meal}
+         ShowAdminControls={ShowAdminControls}
+      />
    ));
    // meals.splice(0, meals.length); //simulating empty response
    if (isLoading) {

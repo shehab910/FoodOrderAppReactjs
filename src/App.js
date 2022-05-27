@@ -6,6 +6,7 @@ import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
 import CartProvider from "./store/CartProvider";
 import AdminLogin from "./pages/AdminLogin";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
    const [isCartOn, setIsCartOn] = useState(false);
@@ -28,7 +29,8 @@ function App() {
                   />
                }
             />
-            <Route path="/Admin" element={<AdminLogin />} />
+            <Route path="/admin/login" element={<AdminLogin />} exact />
+            <Route path="admin" element={<AdminPanel />} />
          </Routes>
       </Router>
    );
