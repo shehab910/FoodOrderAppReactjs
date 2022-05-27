@@ -9,8 +9,7 @@ import styles from "./MealItem.module.css";
 const MealItem = (props) => {
    const cardCtx = useContext(CartContext);
 
-   const { showAdminControls, onDeleteHandler, onEditHandler } =
-      props.adminControls;
+   const isAdmin = props.adminControls?.showAdminControls;
 
    const addToCartHandler = (amount) => {
       cardCtx.addItem({
@@ -31,13 +30,15 @@ const MealItem = (props) => {
             <div className={styles.price}>{price}</div>
          </div>
          <div>
-            {!showAdminControls && (
-               <MealItemForm onAddToCart={addToCartHandler} />
-            )}
-            {showAdminControls && (
+            {!isAdmin && <MealItemForm onAddToCart={addToCartHandler} />}
+            {isAdmin && (
                <AdminControls
-                  onDeleteHandler={(e) => onDeleteHandler(e, meal.id)}
-                  onEditHandler={(e) => onEditHandler(e, meal.id)}
+                  onDeleteHandler={(e) =>
+                     props.adminConrols.onDeleteHandler(e, meal.id)
+                  }
+                  onEditHandler={(e) =>
+                     props.adminConrols.onEditHandler(e, meal.id)
+                  }
                />
             )}
          </div>
