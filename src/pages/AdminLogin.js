@@ -1,27 +1,51 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAsync from "../components/custom-hooks/useAsync";
 
 import styles from "./AdminLogin.module.css";
 
 const intialFormData = {
-   email: "",
-   password: "",
+   email: "admin@admin.com",
+   password: "admin",
 };
 
 const AdminLogin = () => {
    const [formData, setFormData] = useState({ ...intialFormData });
+   const [submitted, setSubmitted] = useState(false);
 
    const { email, password } = formData;
 
-   const onChangeHandler = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-   };
+   const navigate = useNavigate();
+
+   const { loading, error, value } = useAsync(async () => {
+      if (!submitted) return;
+
+      const response = await fetch("/api/users/login/", {
+         credentials: "include",
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      console.log(data);
+      const { token } = data;
+      if (token) {
+         localStorage.setItem("token", token);
+         navigate("/admin");
+      } else {
+         setSubmitted(false);
+      }
+   }, [submitted, navigate]);
 
    const onSubmitHandler = (e) => {
       e.preventDefault();
       setFormData({ ...intialFormData });
-      console.log(formData);
+      setSubmitted(true);
    };
 
+   const onChangeHandler = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+   };
    return (
       <div className={styles.container}>
          <div className={styles.card}>
