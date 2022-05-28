@@ -33,11 +33,11 @@ const MealItem = (props) => {
             {!isAdmin && <MealItemForm onAddToCart={addToCartHandler} />}
             {isAdmin && (
                <AdminControls
-                  onDeleteHandler={(e) =>
-                     props.adminConrols.onDeleteHandler(e, meal.id)
-                  }
+                  onDeleteHandler={(e) => {
+                     props.adminControls?.onDeleteHandler(e, meal.id);
+                  }}
                   onEditHandler={(e) =>
-                     props.adminConrols.onEditHandler(e, meal.id)
+                     props.adminControls?.onEditHandler(e, meal)
                   }
                />
             )}
