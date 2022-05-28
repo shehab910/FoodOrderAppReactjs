@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import AddEditMeal from "../components/Admin/AddEditMeal";
 import useForceUpdate from "../components/custom-hooks/useForceUpdate";
 import AvailableMeals from "../components/Meals/AvailableMeals";
+import Card from "../components/UI/Card";
+import { deleteMeal, addMeal, editMeal } from "../services/meals/mealServices";
 
 import adminControlStyles from "../components/Admin/AdminControls.module.css";
 import { meals } from "../components/Meals/AvailableMeals.module.css";
-import Card from "../components/UI/Card";
 
 const AdminPanel = () => {
    const hasToken = localStorage.getItem("token");
@@ -26,24 +27,11 @@ const AdminPanel = () => {
       }
    }, [hasToken, nav]);
 
-   const onDeleteHandler = (e, id) => {
+   const onDeleteHandler = async (e, id) => {
       e.preventDefault();
       console.log(hasToken);
-      const deleteMeal = async () => {
-         const response = await fetch(`/api/meals/${id}/`, {
-            credentials: "include",
-            method: "DELETE",
-            //add bear token
-
-            headers: {
-               "Content-Type": "application/json",
-               Authorization: `Bearer ${hasToken}`,
-            },
-         });
-         console.log(response);
-         forceUpdate();
-      };
-      deleteMeal();
+      await deleteMeal(id, hasToken);
+      forceUpdate();
    };
 
    const onEditHandler = (e, meal) => {
@@ -57,6 +45,19 @@ const AdminPanel = () => {
    const onAddMealHandler = () => {
       setIsEdit(false);
       setShowModal(true);
+   };
+
+   const onMealSubmitHandler = async (e, newMeal) => {
+      e.preventDefault();
+      if (isEdit) {
+         await editMeal(newMeal?.id, newMeal, hasToken);
+      } else {
+         console.log("adminpanel ");
+         console.log(newMeal);
+         await addMeal(newMeal, hasToken);
+      }
+      setShowModal(false);
+      forceUpdate();
    };
 
    const adminControls = {
@@ -80,6 +81,7 @@ const AdminPanel = () => {
                      onHideModal={onHideModal}
                      isEdit={isEdit}
                      meal={mealToEdit}
+                     onMealSubmit={onMealSubmitHandler}
                   />
                )}
             </Card>

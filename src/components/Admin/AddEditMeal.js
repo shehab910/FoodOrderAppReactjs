@@ -41,7 +41,7 @@ function AddEditMeal(props) {
                      <input
                         label="Title"
                         type="text"
-                        name="title"
+                        name="name"
                         placeholder="Enter the new meal title"
                         value={name}
                         onChange={onChangeHandler}
@@ -62,7 +62,12 @@ function AddEditMeal(props) {
                         value={price}
                         onChange={onChangeHandler}
                      />
-                     <button className={styles.btn}>{buttonText}</button>
+                     <button
+                        onClick={(e) => props.onMealSubmit(e, mealData)}
+                        className={styles.btn}
+                     >
+                        {buttonText}
+                     </button>
                      <button onClick={props.onHideModal} className={styles.btn}>
                         Cancel
                      </button>
