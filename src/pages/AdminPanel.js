@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AddMeal from "../components/Admin/AddMeal";
+import AddEditMeal from "../components/Admin/AddEditMeal";
 import useForceUpdate from "../components/custom-hooks/useForceUpdate";
 import AvailableMeals from "../components/Meals/AvailableMeals";
 
@@ -12,11 +12,13 @@ import Card from "../components/UI/Card";
 const AdminPanel = () => {
    const hasToken = localStorage.getItem("token");
    const [showModal, setShowModal] = useState(false);
+   const [isEdit, setIsEdit] = useState(false);
+   const [mealToEdit, setMealToEdit] = useState(null);
 
    const onHideModal = () => setShowModal(false);
 
    const nav = useNavigate();
-   const { forceUpdate, value } = useForceUpdate();
+   const { forceUpdate, value: forceUpdateValue } = useForceUpdate();
 
    useEffect(() => {
       if (!hasToken) {
@@ -44,9 +46,19 @@ const AdminPanel = () => {
       deleteMeal();
    };
 
-   const onEditHandler = (e, id) => {
+   const onEditHandler = (e, meal) => {
       e.preventDefault();
+      setIsEdit(true);
+      setShowModal(true);
+      setMealToEdit(meal);
+      console.log(meal);
    };
+
+   const onAddMealHandler = () => {
+      setIsEdit(false);
+      setShowModal(true);
+   };
+
    const adminControls = {
       onDeleteHandler,
       onEditHandler,
@@ -58,15 +70,24 @@ const AdminPanel = () => {
             <Card>
                <div>AdminPanel</div>
                <button
-                  onClick={() => setShowModal(true)}
+                  onClick={onAddMealHandler}
                   className={adminControlStyles.btn}
                >
                   Add Meal
                </button>
-               {showModal && <AddMeal onHideModal={onHideModal} />}
+               {showModal && (
+                  <AddEditMeal
+                     onHideModal={onHideModal}
+                     isEdit={isEdit}
+                     meal={mealToEdit}
+                  />
+               )}
             </Card>
          </div>
-         <AvailableMeals key={value} adminControls={{ ...adminControls }} />
+         <AvailableMeals
+            key={forceUpdateValue}
+            adminControls={{ ...adminControls }}
+         />
       </>
    );
 };

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../UI/Modal";
 
-import styles from "./AddMeal.module.css";
+import styles from "./AddEditMeal.module.css";
 
 const initialMealState = {
-   title: "",
+   name: "",
    description: "",
    price: "",
 };
@@ -13,9 +13,18 @@ const onSubmitHandler = (e) => {
    e.preventDefault();
 };
 
-function AddMeal(props) {
+function AddEditMeal(props) {
    const [mealData, setMealData] = useState({ ...initialMealState });
-   const { title, description, price } = mealData;
+   const { name, description, price, id } = mealData;
+
+   const modalTitle = props.isEdit ? "Edit Existing Meal Data" : "Add New Meal";
+   const buttonText = props.isEdit ? "Save" : "Add Meal";
+
+   useEffect(() => {
+      if (props.isEdit) {
+         setMealData({ ...props.meal });
+      }
+   }, [props.isEdit, props.meal]);
 
    const onChangeHandler = (e) => {
       setMealData({ ...mealData, [e.target.name]: e.target.value });
@@ -25,15 +34,16 @@ function AddMeal(props) {
       <Modal onHideModal={props.onHideModal}>
          <div className={styles.container}>
             <div className={styles.card}>
-               <h2>Add New Meal</h2>
+               <h2>{modalTitle}</h2>
                <form onSubmit={onSubmitHandler}>
                   <div className={styles["form-group"]}>
+                     {props.isEdit && <h3>Meal id: {id}</h3>}
                      <input
                         label="Title"
                         type="text"
                         name="title"
                         placeholder="Enter the new meal title"
-                        value={title}
+                        value={name}
                         onChange={onChangeHandler}
                      />
                      <input
@@ -52,7 +62,7 @@ function AddMeal(props) {
                         value={price}
                         onChange={onChangeHandler}
                      />
-                     <button className={styles.btn}>Add Meal</button>
+                     <button className={styles.btn}>{buttonText}</button>
                      <button onClick={props.onHideModal} className={styles.btn}>
                         Cancel
                      </button>
@@ -64,4 +74,4 @@ function AddMeal(props) {
    );
 }
 
-export default AddMeal;
+export default AddEditMeal;
