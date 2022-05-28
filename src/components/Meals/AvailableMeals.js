@@ -30,70 +30,74 @@ import MealItem from "./MealItem/MealItem";
 //   },
 // ];
 
-const apiLink =
-  "https://reactmeals-4dfb6-default-rtdb.europe-west1.firebasedatabase.app/meals.json";
+const apiLink = "/api/meals/";
 
-const AvailableMeals = () => {
-  const [meals, setMeals] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [httpError, setHttpError] = useState();
+const AvailableMeals = ({ adminControls }) => {
+   const [meals, setMeals] = useState([]);
+   const [isLoading, setIsLoading] = useState(true);
+   const [httpError, setHttpError] = useState();
 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      const response = await fetch(apiLink);
-      const data = await response.json();
-      if(!response.ok){
-        throw new Error('Something went wrong...');
-      }
-      const loadedMeals = [];
-      for (const key in data) {
-        loadedMeals.push({
-          id: key,
-          name: data[key].name,
-          description: data[key].description,
-          price: data[key].price,
-        });
-      }
-      setMeals(loadedMeals);
-      setIsLoading(false);
-    };
+   useEffect(() => {
+      const fetchMeals = async () => {
+         const response = await fetch(apiLink);
+         const data = await response.json();
+         console.log(data);
 
-    fetchMeals().catch(error => {
-      setIsLoading(false);
-      setHttpError(error.message);
-    });
-  }, []);
+         if (!response.ok) {
+            throw new Error("Something went wrong...");
+         }
 
-  const mealsList = meals.map((meal) => <MealItem key={meal.id} meal={meal} />);
-  // meals.splice(0, meals.length); //simulating empty response
-  if (isLoading) {
-    return (
-      <section className={styles["meals-loading"]}>
-        <h2>Loading...</h2>
+         const loadedMeals = [];
+         for (const key in data) {
+            loadedMeals.push({
+               id: data[key]._id,
+               name: data[key].name,
+               description: data[key].description,
+               price: data[key].price,
+            });
+         }
+         setMeals(loadedMeals);
+         setIsLoading(false);
+      };
+
+      fetchMeals().catch((error) => {
+         setIsLoading(false);
+         setHttpError(error.message);
+      });
+   }, []);
+
+   const mealsList = meals.map((meal) => (
+      <MealItem key={meal.id} meal={meal} adminControls={adminControls} />
+   ));
+   // meals.splice(0, meals.length); //simulating empty response
+   if (isLoading) {
+      return (
+         <section className={styles["meals-loading"]}>
+            <h2>Loading...</h2>
+         </section>
+      );
+   }
+   if (httpError) {
+      return (
+         <section className={styles["meals-loading"]}>
+            <h2>{httpError}</h2>
+         </section>
+      );
+   }
+   if (meals.length === 0) {
+      return (
+         <section className={styles["meals-loading"]}>
+            <h2>No Meals Found.</h2>
+         </section>
+      );
+   }
+   return (
+      <section className={styles.meals}>
+         <Card>
+            <ul>{mealsList}</ul>
+         </Card>
       </section>
-    );
-  }
-  if(httpError){
-    return (
-      <section className={styles["meals-loading"]}>
-        <h2>{httpError}</h2>
-      </section>
-    );
-  }
-  if(meals.length === 0) {
-    return (
-      <section className={styles["meals-loading"]}>
-        <h2>No Meals Found.</h2>
-      </section>
-    );
-  }
-  return (
-    <section className={styles.meals}>
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
-    </section>
-  );
+   );
 };
 
 export default AvailableMeals;
