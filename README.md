@@ -1,4 +1,4 @@
-# FoodOrderAppReactjs
+# React Meals Front-end
 
 **_<ins>Note: this project is on migration to a full-stack food order app with an admin panel and user account system</ins>_**
 
