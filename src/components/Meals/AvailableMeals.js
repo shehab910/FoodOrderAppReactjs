@@ -3,7 +3,7 @@ import Card from "../UI/Card";
 import styles from "./AvailableMeals.module.css";
 import MealItem from "./MealItem/MealItem";
 
-const apiLink = "/api/meals/";
+const mealsUrl = `${process.env.REACT_APP_API_URL}/meals/`;
 
 const AvailableMeals = ({ adminControls }) => {
    const [meals, setMeals] = useState([]);
@@ -12,7 +12,7 @@ const AvailableMeals = ({ adminControls }) => {
 
    useEffect(() => {
       const fetchMeals = async () => {
-         const response = await fetch(apiLink);
+         const response = await fetch(mealsUrl);
          const data = await response.json();
          console.log(data);
 

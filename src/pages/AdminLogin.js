@@ -20,8 +20,8 @@ const AdminLogin = () => {
    const { loading, error, value } = useAsync(async () => {
       if (!submitted) return;
 
-      const response = await fetch("/api/users/login/", {
-         credentials: "include",
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const response = await fetch(`${apiUrl}/users/login/`, {
          method: "POST",
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify({ email, password }),
