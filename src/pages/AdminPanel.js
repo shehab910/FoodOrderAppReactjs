@@ -8,7 +8,8 @@ import Card from "../components/UI/Card";
 import { deleteMeal, addMeal, editMeal } from "../services/meals/mealServices";
 
 import adminControlStyles from "../components/Admin/AdminControls.module.css";
-import { meals } from "../components/Meals/AvailableMeals.module.css";
+import styles from "./AdminPanel.module.css";
+import { meals as mealsStyle } from "../components/Meals/AvailableMeals.module.css";
 
 const AdminPanel = () => {
    const hasToken = localStorage.getItem("token");
@@ -60,6 +61,12 @@ const AdminPanel = () => {
       forceUpdate();
    };
 
+   const onLogoutHandler = (e) => {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      nav("/");
+   };
+
    const adminControls = {
       onDeleteHandler,
       onEditHandler,
@@ -67,25 +74,33 @@ const AdminPanel = () => {
    };
    return (
       <>
-         <div className={meals}>
+         <div className={mealsStyle}>
             <Card>
-               <div>AdminPanel</div>
-               <button
-                  onClick={onAddMealHandler}
-                  className={adminControlStyles.btn}
-               >
-                  Add Meal
-               </button>
-               {showModal && (
-                  <AddEditMeal
-                     onHideModal={onHideModal}
-                     isEdit={isEdit}
-                     meal={mealToEdit}
-                     onMealSubmit={onMealSubmitHandler}
-                  />
-               )}
+               <div className={styles["admin-container"]}>
+                  <h2>Admin Panel</h2>
+                  <button
+                     onClick={onAddMealHandler}
+                     className={adminControlStyles.btn}
+                  >
+                     Add Meal
+                  </button>
+                  <button
+                     onClick={onLogoutHandler}
+                     className={adminControlStyles.btn}
+                  >
+                     Logout
+                  </button>
+               </div>
             </Card>
          </div>
+         {showModal && (
+            <AddEditMeal
+               onHideModal={onHideModal}
+               isEdit={isEdit}
+               meal={mealToEdit}
+               onMealSubmit={onMealSubmitHandler}
+            />
+         )}
          <AvailableMeals
             key={forceUpdateValue}
             adminControls={{ ...adminControls }}
