@@ -30,7 +30,7 @@ const AdminPanel = () => {
 
    const onDeleteHandler = async (e, id) => {
       e.preventDefault();
-      console.log(hasToken);
+      // console.log(hasToken);
       await deleteMeal(id, hasToken);
       forceUpdate();
    };
@@ -40,7 +40,7 @@ const AdminPanel = () => {
       setIsEdit(true);
       setShowModal(true);
       setMealToEdit(meal);
-      console.log(meal);
+      // console.log(meal);
    };
 
    const onAddMealHandler = () => {
@@ -53,8 +53,8 @@ const AdminPanel = () => {
       if (isEdit) {
          await editMeal(newMeal?.id, newMeal, hasToken);
       } else {
-         console.log("adminpanel ");
-         console.log(newMeal);
+         // console.log("adminpanel ");
+         // console.log(newMeal);
          await addMeal(newMeal, hasToken);
       }
       setShowModal(false);
