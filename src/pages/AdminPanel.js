@@ -9,7 +9,7 @@ import { deleteMeal, addMeal, editMeal } from "../services/meals/mealServices";
 
 import adminControlStyles from "../components/Admin/AdminControls.module.css";
 import styles from "./AdminPanel.module.css";
-import { meals as mealsStyle } from "../components/Meals/AvailableMeals.module.css";
+import mealsStyles from "../components/Meals/AvailableMeals.module.css";
 
 const AdminPanel = () => {
    const hasToken = localStorage.getItem("token");
@@ -74,7 +74,7 @@ const AdminPanel = () => {
    };
    return (
       <>
-         <div className={mealsStyle}>
+         <div className={mealsStyles.meals}>
             <Card>
                <div className={styles["admin-container"]}>
                   <h2>Admin Panel</h2>
