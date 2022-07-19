@@ -24,7 +24,7 @@ const AdminPanel = () => {
 
    useEffect(() => {
       if (!hasToken) {
-         nav("/admin/login");
+         nav("/login");
       }
    }, [hasToken, nav]);
 

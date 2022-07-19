@@ -13,6 +13,7 @@ export const addMeal = async (meal, hasToken) => {
          Authorization: `Bearer ${hasToken}`,
       },
    });
+   return response;
    // console.log(response);
 };
 
@@ -29,6 +30,7 @@ export const editMeal = async (id, meal, hasToken) => {
          Authorization: `Bearer ${hasToken}`,
       },
    });
+   return response;
    // console.log(response);
 };
 
@@ -42,5 +44,6 @@ export const deleteMeal = async (id, hasToken) => {
          Authorization: `Bearer ${hasToken}`,
       },
    });
+   return response;
    // console.log(response);
 };

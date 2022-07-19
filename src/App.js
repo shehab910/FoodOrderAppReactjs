@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Header from "./components/Layout/Header";
+import Header from "./components/Layout/Header/Header";
 import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
 import CartProvider from "./store/CartProvider";
-import AdminLogin from "./pages/AdminLogin";
+import Login from "./pages/Login";
 import AdminPanel from "./pages/AdminPanel";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
                   />
                }
             />
-            <Route path="/admin/login" element={<AdminLogin />} exact />
+            <Route path="/login" element={<Login />} exact />
             <Route path="admin" element={<AdminPanel />} />
          </Routes>
       </Router>
