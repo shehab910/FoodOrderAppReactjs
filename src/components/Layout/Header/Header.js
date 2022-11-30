@@ -1,7 +1,7 @@
 import mealsImage from "../../../assets/meals.jpg";
 
 import styles from "./Header.module.css";
-import HeaderCartButton from "../HeaderCartButton";
+import HeaderCartButton from "./HeaderCartButton";
 import LoginButton from "./LoginButton";
 
 const Header = (props) => {

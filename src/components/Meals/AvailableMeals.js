@@ -14,7 +14,7 @@ const AvailableMeals = ({ adminControls }) => {
       const fetchMeals = async () => {
          const response = await fetch(mealsUrl);
          const data = await response.json();
-         // console.log(data);
+         console.log(data);
 
          if (!response.ok) {
             throw new Error("Something went wrong...");

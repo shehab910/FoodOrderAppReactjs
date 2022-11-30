@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import CartIcon from "../UI/Icons/CartIcon";
-import CartContext from "../../store/cart-context";
+import CartIcon from "../../UI/Icons/CartIcon";
+import CartContext from "../../../store/cart-context";
 import styles from "./HeaderCartButton.module.css";
-import useMediaQuery from "../custom-hooks/useMediaQuery";
+import useMediaQuery from "../../custom-hooks/useMediaQuery";
 
 const HeaderCartButton = (props) => {
    const cartCtx = useContext(CartContext);
