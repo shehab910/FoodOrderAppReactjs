@@ -8,4 +8,4 @@ Check the Backend here: [Github/ReactMealsBackend](https://github.com/shehab910/
 
 Don't forget to check the admin panel [/admin](https://react-meals-frontend.herokuapp.com/admin)
 
-### Check out v.0.2.0 here : [react-meals-frontend.herokuapp.com](https://react-meals-frontend.herokuapp.com/)
+### Check out v.0.2.0 here : [react-meals-frontend.vercel.app](https://react-meals-frontend.vercel.app/)
