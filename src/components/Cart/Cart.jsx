@@ -42,7 +42,10 @@ const Cart = (props) => {
 
 	const cartActions = (
 		<div className={styles.actions}>
-			<button onClick={props.onHideCart} className={styles["button--alt"]}>
+			<button
+				onClick={props.onHideCart}
+				className={styles["button--alt"]}
+			>
 				Close
 			</button>
 			{hasItems && (
