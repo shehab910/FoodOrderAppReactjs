@@ -1,32 +1,30 @@
-import ReactDOM from "react-dom";
-
+import { useCallback, useEffect, useRef } from "react";
 import styles from "./Modal.module.css";
 
-const Backdrop = (props) => {
-   return <div className={styles.backdrop} onClick={props.onHideModal} />;
-};
+export default function Modal({ open, onClose, children }) {
+	const modalRef = useRef(null);
 
-const ModalOverlay = (props) => {
-   return (
-      <div className={styles.modal}>
-         <div className={styles.content}>{props.children}</div>
-      </div>
-   );
-};
-const htmlElement = document.getElementById("overlayes");
-const Modal = (props) => {
-   return (
-      <>
-         {ReactDOM.createPortal(
-            <Backdrop onHideModal={props.onHideModal} />,
-            htmlElement
-         )}
-         {ReactDOM.createPortal(
-            <ModalOverlay>{props.children}</ModalOverlay>,
-            htmlElement
-         )}
-      </>
-   );
-};
+	const onClick = useCallback(
+		({ target }) => {
+			if (target === modalRef.current) onClose();
+		},
+		[onClose]
+	);
 
-export default Modal;
+	useEffect(() => {
+		if (open) modalRef.current.showModal();
+		else modalRef.current.close();
+	}, [open]);
+
+	return (
+		<dialog
+			ref={modalRef}
+			className={styles.modal}
+			onClose={onClose}
+			onCancel={onClose}
+			onClick={onClick}
+		>
+			<div className={styles["modal__container"]}>{children}</div>
+		</dialog>
+	);
+}

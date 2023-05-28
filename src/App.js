@@ -9,43 +9,43 @@ import Login from "./pages/Login";
 import AdminPanel from "./pages/AdminPanel";
 
 function App() {
-   const [isCartOn, setIsCartOn] = useState(false);
-   const showCartHandler = () => {
-      setIsCartOn(true);
-   };
-   const hideCartHandler = () => {
-      setIsCartOn(false);
-   };
-   return (
-      <Router>
-         <Routes>
-            <Route
-               path="/"
-               element={
-                  <MainComp
-                     isCartOn={isCartOn}
-                     hideCartHandler={hideCartHandler}
-                     showCartHandler={showCartHandler}
-                  />
-               }
-            />
-            <Route path="/login" element={<Login />} exact />
-            <Route path="admin" element={<AdminPanel />} />
-         </Routes>
-      </Router>
-   );
+	const [isCartOn, setIsCartOn] = useState(false);
+	const showCartHandler = () => {
+		setIsCartOn(true);
+	};
+	const hideCartHandler = () => {
+		setIsCartOn(false);
+	};
+	return (
+		<Router>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<MainComp
+							isCartOn={isCartOn}
+							hideCartHandler={hideCartHandler}
+							showCartHandler={showCartHandler}
+						/>
+					}
+				/>
+				<Route path="/login" element={<Login />} exact />
+				<Route path="admin" element={<AdminPanel />} />
+			</Routes>
+		</Router>
+	);
 }
 
 const MainComp = ({ isCartOn, hideCartHandler, showCartHandler }) => {
-   return (
-      <CartProvider>
-         {isCartOn && <Cart onHideCart={hideCartHandler} />}
-         <main>
-            <Header onShowCart={showCartHandler} />
-            <Meals />
-         </main>
-      </CartProvider>
-   );
+	return (
+		<CartProvider>
+			<Cart isCartOn={isCartOn} onHideCart={hideCartHandler} />
+			<main>
+				<Header onShowCart={showCartHandler} />
+				<Meals />
+			</main>
+		</CartProvider>
+	);
 };
 
 export default App;
